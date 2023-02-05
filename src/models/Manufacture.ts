@@ -7,12 +7,12 @@ export enum ResourceTypes {
 }
 
 export class Manufacture {
-    resourceType: ResourceTypes;
+    resourceType: string;
     capacity: number;
     reserves: number;
     performance: number
 
-    constructor(resourceType: ResourceTypes,) {
+    constructor(resourceType: string) {
         this.resourceType = resourceType;
         this.capacity = MIN_CAPACITY;
         this.reserves = 0;
