@@ -13,19 +13,23 @@ export class Engine extends BaseClass {
         this.unemployedWorkers = []
     }
 
-    initFactories() {
-        const resTypes = Object.keys(ResourceTypes)
-        const result: Factory[] = []
-        for (let type of resTypes) {
-            let newManufacture = new Manufacture(type)
-            let newFactory = new Factory({
-                name: `${type}_factory`,
-                manufacture: newManufacture,
-                relatedObject: this
-            })
+    public initFactories() {
+        let result :Factory[] = []
+        for(let type of Object.values(ResourceTypes) ){
+            let newFactory = this.getNewFactory(type, type === ResourceTypes.HEAT)
             result.push(newFactory)
         }
         this.factories = result
+    }
+
+    private getNewFactory(resourceType:ResourceTypes, isAvailable?:boolean){
+        let newFactory = new Factory({
+            name: `${resourceType} factory`,
+            manufacture: new Manufacture(resourceType),
+            relatedObject: this
+        })
+        if(isAvailable) newFactory.setAvailable(true)
+        return newFactory
     }
 
 }
