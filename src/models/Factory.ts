@@ -8,12 +8,14 @@ export interface NewFactoryParams extends NewBaseClassParams {
 
 export class Factory extends BaseClass {
     isAvailable: boolean;
+    isAutomated: boolean
     manufacture: Manufacture;
     workers: Worker[];
 
     constructor(factoryParams: NewFactoryParams) {
         super(factoryParams)
         this.isAvailable = false
+        this.isAutomated = false
         this.manufacture = factoryParams.manufacture
         this.workers = []
     }
@@ -30,5 +32,6 @@ export class Factory extends BaseClass {
     setAvailable(value: boolean) {
         this.isAvailable = value
     }
+
 
 }
