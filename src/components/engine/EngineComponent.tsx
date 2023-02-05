@@ -13,7 +13,10 @@ const EngineComponent:FC<EngineProps>= ({factories,unemployedWorkers}) => {
     return (
         <div>
             {factories.map((factory)=>(
-                <FactoryComponent factory={factory}/>
+                <FactoryComponent
+                    key={`factory_${factory.manufacture.resourceType}`}
+                    factory={factory}
+                />
             ))}
             <div>{factories.length}</div>
             <div>{unemployedWorkers.length}</div>
