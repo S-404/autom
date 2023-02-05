@@ -1,25 +1,22 @@
 import React, {FC} from 'react';
-import {Factory} from "../../models/Factory";
-import {Worker} from "../../models/Worker";
 import FactoryComponent from "../factory/FactoryComponent";
+import {Engine} from "../../models/Engine";
 
-interface EngineProps{
-    factories: Factory[]
-    unemployedWorkers: Worker[]
-
+interface EngineProps {
+    engine: Engine
 }
 
-const EngineComponent:FC<EngineProps>= ({factories,unemployedWorkers}) => {
+const EngineComponent: FC<EngineProps> = ({engine}) => {
     return (
         <div>
-            {factories.map((factory)=>(
+            {engine.factories.map((factory) => (
                 <FactoryComponent
                     key={`factory_${factory.manufacture.resourceType}`}
                     factory={factory}
                 />
             ))}
-            <div>{factories.length}</div>
-            <div>{unemployedWorkers.length}</div>
+            <div>{engine.factories.length}</div>
+            <div>{engine.unemployedWorkers.length}</div>
         </div>
     );
 };

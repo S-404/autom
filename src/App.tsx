@@ -21,7 +21,7 @@ const App: FC = () => {
 
     return (
         <div className="App">
-        <EngineComponent {...engine}/>
+        <EngineComponent engine={engine}/>
         </div>
     );
 }
