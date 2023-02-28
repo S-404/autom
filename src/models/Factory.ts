@@ -1,5 +1,5 @@
 import {BaseClass, NewBaseClassParams} from "./BaseClass";
-import {Manufacture} from "./Manufacture";
+import {Manufacture, ResourceTypes} from "./Manufacture";
 
 
 export interface NewFactoryParams extends NewBaseClassParams {
@@ -8,6 +8,7 @@ export interface NewFactoryParams extends NewBaseClassParams {
 
 export class Factory extends BaseClass {
     isAvailable: boolean;
+    devPhaseConditionToActivate: number;
     isAutomated: boolean
     manufacture: Manufacture;
     workers: Worker[];
@@ -18,6 +19,7 @@ export class Factory extends BaseClass {
         this.isAutomated = false
         this.manufacture = factoryParams.manufacture
         this.workers = []
+        this.devPhaseConditionToActivate = this.defineDevPhaseConditionToActivate(factoryParams.manufacture.resourceType)
     }
 
     addWorker(worker: Worker) {
@@ -34,4 +36,19 @@ export class Factory extends BaseClass {
     }
 
 
+    private defineDevPhaseConditionToActivate(manufactureType: ResourceTypes) {
+        switch (manufactureType) {
+            case ResourceTypes.HEAT:
+                return 0
+            case ResourceTypes.WORKERS:
+                return 1
+            case ResourceTypes.ENERGY:
+                return 2
+            case ResourceTypes.STEEL:
+                return 3
+            default:
+                return 100
+        }
+
+    }
 }
