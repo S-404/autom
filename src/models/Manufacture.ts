@@ -5,6 +5,11 @@ export enum ResourceTypes {
     ENERGY = 'Energy'
 }
 
+export interface IProduceCostType {
+    type: ResourceTypes
+    cost: number
+}
+
 export class Manufacture {
     resourceType: ResourceTypes;
     capacity: number;
@@ -24,16 +29,39 @@ export class Manufacture {
             case ResourceTypes.HEAT:
                 return 4
             case ResourceTypes.WORKERS:
-                return 1
+                return 5
             default:
                 return 10
         }
     }
 
-    public produce(){
-        let newReserveValue = this.reserves + 1
-        if(newReserveValue <= this.capacity){
-            this.reserves++
+    public defineDevPhaseConditionToActivate() {
+        switch (this.resourceType) {
+            case ResourceTypes.HEAT:
+                return 0
+            case ResourceTypes.WORKERS:
+                return 1
+            case ResourceTypes.ENERGY:
+                return 2
+            case ResourceTypes.STEEL:
+                return 3
+            default:
+                return 100
+        }
+    }
+
+    public defineProduceCost():IProduceCostType {
+        switch (this.resourceType) {
+            case ResourceTypes.HEAT:
+                return {type: ResourceTypes.HEAT, cost: 0}
+            case ResourceTypes.WORKERS:
+                return {type: ResourceTypes.HEAT, cost: 4}
+            case ResourceTypes.STEEL:
+                return {type: ResourceTypes.ENERGY, cost: 10}
+            case ResourceTypes.ENERGY:
+                return {type: ResourceTypes.HEAT, cost: 10}
+            default:
+                return {type: ResourceTypes.HEAT, cost: 0}
         }
     }
 }

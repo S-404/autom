@@ -21,7 +21,7 @@ const FactoryComponent: FC<FactoryProps> = ({factory}) => {
 
     }
     const produce = () => {
-        factory.manufacture.produce()
+        engine.produce(factory.manufacture)
         engine.checkDevPhaseCondition()
         // // updateComponent()
         updateEngine()

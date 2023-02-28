@@ -24,9 +24,6 @@ const App: FC = () => {
         restart()
     }, [])
 
-    useEffect(() => {
-        console.log('engine?.devPhase', engine?.devPhase)
-    }, [engine?.devPhase])
 
     return (
         <Context.Provider value={
