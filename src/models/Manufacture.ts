@@ -29,4 +29,11 @@ export class Manufacture {
                 return 10
         }
     }
+
+    public produce(){
+        let newReserveValue = this.reserves + 1
+        if(newReserveValue <= this.capacity){
+            this.reserves++
+        }
+    }
 }
