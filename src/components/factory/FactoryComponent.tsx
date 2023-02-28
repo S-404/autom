@@ -1,32 +1,27 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {Factory} from "../../models/Factory";
 import './factoryComponent.scss'
 import ManufactureComponent from "../manufacture/ManufactureComponent";
+import ProgressBar from "../UI/progressBar/ProgressBar";
 
-interface FactoryProps{
+interface FactoryProps {
     factory: Factory
 }
 
-const FactoryComponent:FC<FactoryProps> = ({factory}) => {
-    const [producing, setProducing ] = useState<boolean>(false)
-    const addWorker = () =>{
+const FactoryComponent: FC<FactoryProps> = ({factory}) => {
+    const [, updateState] = useState<object>();
+    const updateComponent = React.useCallback(() => updateState({}), []);
+
+    const addWorker = () => {
 
     }
     const removeWorker = () => {
 
     }
-    const produce = () =>{
-        setProducing(true)
-        // factory.manufacture.produce()
+    const produce = () => {
+        factory.manufacture.produce()
+        updateComponent()
     }
-
-    useEffect(()=>{
-        if(producing){
-
-        }
-    },[producing])
-
-    useEffect(()=>console.log('factory.manufacture.reserves',factory.manufacture.reserves),[factory.manufacture.reserves])
 
     if (!factory.isAvailable) return null
     return (
@@ -40,10 +35,10 @@ const FactoryComponent:FC<FactoryProps> = ({factory}) => {
                     <span>{factory.workers.length}</span>
                     <button onClick={addWorker}>+</button>
                 </div>
-            :
+                :
                 <button onClick={produce}>produce</button>
             }
-            <progress max={factory.manufacture.capacity} value={factory.manufacture.reserves}></progress>
+            <ProgressBar value={factory.manufacture.reserves} max={factory.manufacture.capacity}/>
         </div>
     );
 };

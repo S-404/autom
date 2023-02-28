@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import {Manufacture} from "../../models/Manufacture";
 
 interface ManufactureProps {
@@ -6,8 +6,6 @@ interface ManufactureProps {
 }
 
 const ManufactureComponent: FC<ManufactureProps> = ({manufacture}) => {
-
-    useEffect(() => console.log('ManufactureComponent useEffect factory.manufacture.reserves', manufacture.reserves), [manufacture.reserves])
     return (
         <div>
             <div>Capacity: {manufacture.capacity}</div>
