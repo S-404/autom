@@ -1,35 +1,48 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import './App.css';
 import {Engine} from "./models/Engine";
 import EngineComponent from "./components/engine/EngineComponent";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "./store";
-import {initEngine} from "./store/productionSlice";
-
+import {Context} from "./Context";
 
 const defaultLocationProps = {name: 'startPosition', relatedObject: null}
 const App: FC = () => {
-    const dispatch = useDispatch()
-    const engine = useSelector<RootState, Engine | null>(state => state.prod.engine)
+
+    const [engine, setEngine] = useState<Engine>(new Engine({name: 'init', relatedObject: null}))
 
     function restart() {
         const newEngine = new Engine(defaultLocationProps)
         newEngine.initFactories()
-        dispatch(initEngine(newEngine))
+        setEngine(newEngine)
+    }
+
+    function updateEngine() {
+        const newEngine = engine?.getCloneEngine()
+        setEngine(newEngine)
     }
 
     useEffect(() => {
         restart()
     }, [])
 
+    useEffect(() => {
+        console.log('engine?.devPhase', engine?.devPhase)
+    }, [engine?.devPhase])
+
     return (
-        <div className="App">
-            {engine !== null ?
-                <EngineComponent engine={engine}/>
-                :
-                null
+        <Context.Provider value={
+            {
+                engine,
+                updateEngine
             }
-        </div>
+        }>
+            <div className="App">
+                {engine !== undefined ?
+                    <EngineComponent engine={engine}/>
+                    :
+                    null
+                }
+            </div>
+        </Context.Provider>
     );
 }
 

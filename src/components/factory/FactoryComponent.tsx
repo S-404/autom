@@ -1,16 +1,18 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useContext} from 'react';
 import {Factory} from "../../models/Factory";
 import './factoryComponent.scss'
 import ManufactureComponent from "../manufacture/ManufactureComponent";
 import ProgressBar from "../UI/progressBar/ProgressBar";
+import {Context} from "../../Context";
 
 interface FactoryProps {
     factory: Factory
 }
 
 const FactoryComponent: FC<FactoryProps> = ({factory}) => {
-    const [, updateState] = useState<object>();
-    const updateComponent = React.useCallback(() => updateState({}), []);
+    const {engine,updateEngine} = useContext(Context)
+    // const [, updateState] = useState<object>();
+    // const updateComponent = React.useCallback(() => updateState({}), []);
 
     const addWorker = () => {
 
@@ -20,10 +22,14 @@ const FactoryComponent: FC<FactoryProps> = ({factory}) => {
     }
     const produce = () => {
         factory.manufacture.produce()
-        updateComponent()
+        engine.checkDevPhaseCondition()
+        // // updateComponent()
+        updateEngine()
     }
 
-    if (!factory.isAvailable) return null
+
+    if (engine === null || (factory.devPhaseConditionToActivate > engine.devPhase)) return null
+
     return (
         <div className='factory'>
             <div>{factory.name}</div>
