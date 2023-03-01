@@ -9,7 +9,7 @@ const ManufactureComponent: FC<ManufactureProps> = ({manufacture}) => {
     return (
         <div>
             <div>Capacity: {manufacture.capacity}</div>
-            <div>Reserves: {manufacture.reserves}</div>
+            <div>Reserves: {manufacture.reserves.toFixed(2)}</div>
             <div>Performance: {manufacture.performance}</div>
         </div>
     );

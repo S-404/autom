@@ -68,18 +68,25 @@ export class Engine extends BaseClass {
         return newEngine
     }
 
-    public produce(manufacture: Manufacture) {
-
+    public startProduction(manufacture: Manufacture) {
         const manufactureCost = manufacture.defineProduceCost()
         const needResourcesFactoryIndex = this.factories.findIndex(item => item.manufacture.resourceType === manufactureCost.type)
         const needResourcesManufacture = this.factories[needResourcesFactoryIndex].manufacture
-        const resourcesReserves = needResourcesManufacture.reserves
 
-        const isEnoughResources = resourcesReserves >= manufactureCost.cost
-        const isEnoughCapacity = manufacture.reserves + 1 <= manufacture.capacity
+        const isEnoughResources = needResourcesManufacture.reserves >= manufactureCost.cost
+        const isEnoughCapacity = manufacture.reserves < manufacture.capacity
         if (isEnoughResources && isEnoughCapacity) {
-            manufacture.reserves++
             needResourcesManufacture.reserves -= manufactureCost.cost
+            return true
         }
+        return false
+    }
+
+    public finishProduction(manufacture: Manufacture) {
+        manufacture.reserves = Math.min(manufacture.reserves + manufacture.performance, manufacture.capacity)
+    }
+
+    private async delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms))
     }
 }

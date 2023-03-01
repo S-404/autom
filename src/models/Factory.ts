@@ -31,9 +31,12 @@ export class Factory extends BaseClass {
         return this.workers.pop()
     }
 
-    setAvailable(value: boolean) {
+    public setAvailable(value: boolean) {
         this.isAvailable = value
     }
 
+    public setAutomate(value:boolean){
+        this.isAutomated = value
+    }
 
 }

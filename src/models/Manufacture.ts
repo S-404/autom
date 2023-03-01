@@ -20,7 +20,7 @@ export class Manufacture {
         this.resourceType = resourceType;
         this.capacity = this.defineDefaultCapacity(resourceType);
         this.reserves = 0;
-        this.performance = 0;
+        this.performance = .2;
 
     }
 
